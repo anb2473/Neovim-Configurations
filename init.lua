@@ -114,11 +114,35 @@ require("lazy").setup({
       "nvimdev/dashboard-nvim",
       event = "VimEnter",
     },
-
+    
     -- QoL
-    "folke/which-key.nvim",
-    "numToStr/Comment.nvim",
-    "windwp/nvim-autopairs",
+    {
+      "folke/which-key.nvim",
+      event = "VeryLazy",
+      config = function()
+        require("which-key").setup({
+          triggers = {
+            { "<leader>", mode = { "n", "v" } },
+          },
+        })
+      end,
+    },
+    
+    {
+      "numToStr/Comment.nvim",
+      keys = { "gc", "gb" },
+      config = function()
+        require("Comment").setup()
+      end,
+    },
+    
+    {
+      "windwp/nvim-autopairs",
+      event = "InsertEnter",
+      config = function()
+        require("nvim-autopairs").setup({})
+      end,
+    },
   },
 })
 
