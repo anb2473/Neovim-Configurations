@@ -62,19 +62,9 @@ require("lazy").setup({
 
     -- Treesitter
     {
-      "nvim-treesitter/nvim-treesitter",
-      build = ":TSUpdate",
-      event = { "BufReadPost", "BufNewFile" },
-      config = function()
-        require("nvim-treesitter.configs").setup({
-          ensure_installed = {
-            "lua", "javascript", "typescript", "python",
-            "go", "rust", "dockerfile", "yaml", "html", "css", "tsx",
-          },
-          highlight = { enable = true },
-          indent = { enable = true },
-        })
-      end,
+      'nvim-treesitter/nvim-treesitter',
+      lazy = false,
+      build = ':TSUpdate'
     },
 
     -- Autotag
