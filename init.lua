@@ -101,20 +101,6 @@ require("lazy").setup({
       config = true,
     }, 
 
-    -- Git UI
-    -- { 
-    --   "kdheepak/lazygit.nvim",
-    --   dependencies = { "nvim-lua/plenary.nvim" },
-    --   cmd = "LazyGit",
-    -- },
-
-    -- Terminal
-    -- { 
-    --   "akinsho/toggleterm.nvim",
-    --   version = "*",
-    --   cmd = "ToggleTerm",
-    -- },
-
     -- UI
     "nvim-tree/nvim-web-devicons",
     "nvim-lualine/lualine.nvim",
@@ -125,20 +111,7 @@ require("lazy").setup({
       "nvimdev/dashboard-nvim",
       event = "VimEnter",
     },
-    
-    -- QoL
-    -- {
-    --   "folke/which-key.nvim",
-    --   event = "VeryLazy",
-    --   config = function()
-    --     require("which-key").setup({
-    --       triggers = {
-    --         { "<leader>", mode = { "n", "v" } },
-    --       },
-    --     })
-    --   end,
-    -- },
-    
+
     {
       "numToStr/Comment.nvim",
       keys = { "gc", "gb" },
@@ -146,7 +119,7 @@ require("lazy").setup({
         require("Comment").setup()
       end,
     },
-    
+
     {
       "windwp/nvim-autopairs",
       event = "InsertEnter",
@@ -212,14 +185,6 @@ telescope.setup({
 })
 
 vim.keymap.set("n", "<leader>f", builtin.find_files, { desc = "Find files" })
-
--- ===============================
--- ToggleTerm
--- ===============================
--- require("toggleterm").setup({
---   open_mapping = [[<leader>tt]],
---   direction = "float",
--- })
 
 -- ===============================
 -- Git
