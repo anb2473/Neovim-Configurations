@@ -90,19 +90,30 @@ require("lazy").setup({
       dependencies = { "nvim-tree/nvim-web-devicons" },
     },
 
+    -- Neogit
+    {
+      "NeogitOrg/neogit",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "sindrets/diffview.nvim",
+        "nvim-telescope/telescope.nvim",
+      },
+      config = true,
+    }, 
+
     -- Git UI
-    { 
-      "kdheepak/lazygit.nvim",
-      dependencies = { "nvim-lua/plenary.nvim" },
-      cmd = "LazyGit",
-    },
+    -- { 
+    --   "kdheepak/lazygit.nvim",
+    --   dependencies = { "nvim-lua/plenary.nvim" },
+    --   cmd = "LazyGit",
+    -- },
 
     -- Terminal
-    { 
-      "akinsho/toggleterm.nvim",
-      version = "*",
-      cmd = "ToggleTerm",
-    },
+    -- { 
+    --   "akinsho/toggleterm.nvim",
+    --   version = "*",
+    --   cmd = "ToggleTerm",
+    -- },
 
     -- UI
     "nvim-tree/nvim-web-devicons",
@@ -116,17 +127,17 @@ require("lazy").setup({
     },
     
     -- QoL
-    {
-      "folke/which-key.nvim",
-      event = "VeryLazy",
-      config = function()
-        require("which-key").setup({
-          triggers = {
-            { "<leader>", mode = { "n", "v" } },
-          },
-        })
-      end,
-    },
+    -- {
+    --   "folke/which-key.nvim",
+    --   event = "VeryLazy",
+    --   config = function()
+    --     require("which-key").setup({
+    --       triggers = {
+    --         { "<leader>", mode = { "n", "v" } },
+    --       },
+    --     })
+    --   end,
+    -- },
     
     {
       "numToStr/Comment.nvim",
@@ -147,6 +158,13 @@ require("lazy").setup({
 })
 
 -- ===============================
+-- Diagnostics
+-- ===============================
+vim.diagnostic.config({
+  virtual_text = true
+})
+
+-- ===============================
 -- Theme
 -- ===============================
 vim.cmd.colorscheme("nord")
@@ -161,9 +179,20 @@ require("lualine").setup({
 -- ===============================
 -- Oil.nvim
 -- ===============================
-require("oil").setup({ view_options = { show_hidden = true } })
+require("oil").setup({ 
+  view_options = { show_hidden = true },
+})
 vim.keymap.set("n", "<leader>e", require("oil").open, { desc = "File explorer" })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "oil",
+  callback = function()
+      vim.cmd([[
+        cnoreabbrev <buffer> q bd
+        cnoreabbrev <buffer> q! bd!
+      ]])
+  end,
+})
 -- ===============================
 -- Telescope (simplified)
 -- ===============================
@@ -182,22 +211,20 @@ telescope.setup({
   },
 })
 
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live grep" })
-vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent files" })
+vim.keymap.set("n", "<leader>f", builtin.find_files, { desc = "Find files" })
 
 -- ===============================
 -- ToggleTerm
 -- ===============================
-require("toggleterm").setup({
-  open_mapping = [[<leader>tt]],
-  direction = "float",
-})
+-- require("toggleterm").setup({
+--   open_mapping = [[<leader>tt]],
+--   direction = "float",
+-- })
 
 -- ===============================
 -- Git
 -- ===============================
-vim.keymap.set("n", "<leader>gg", ":LazyGit<CR>", { desc = "LazyGit" })
+vim.keymap.set("n", "<leader>g", "<cmd>Neogit<cr>", { desc = "Neogit" })
 
 -- ===============================
 -- Dashboard
@@ -217,10 +244,8 @@ require("dashboard").setup({
     },
     center = {
       { desc = "Find File", key = "f", action = "Telescope find_files" },
-      { desc = "Recent Files", key = "r", action = "Telescope oldfiles" },
       { desc = "File Explorer", key = "e", action = "lua require('oil').open()" },
-      { desc = "LazyGit", key = "g", action = "LazyGit" },
-      { desc = "Terminal", key = "t", action = "ToggleTerm" },
+      { desc = "Neogit", key = "g", action = "Neogit" },
       { desc = "Quit", key = "q", action = "qa" },
     },
   },
@@ -276,5 +301,4 @@ cmp.setup({
 -- QoL
 -- ===============================
 require("Comment").setup()
-require("which-key").setup()
 require("nvim-autopairs").setup({})
